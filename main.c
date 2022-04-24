@@ -35,7 +35,6 @@ void *calc(void *iterations) {
     if (inside_unit_circle(gen_point(&state))) {
       total_in++;
     }
-    //printf("iteration\n");
   }
 
   return total_in;
