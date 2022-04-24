@@ -31,7 +31,7 @@ void *calc(void *iterations) {
   int state = time(NULL) ^ pthread_self();
 
   unsigned int total_in = 0;
-  for (int i = 0; i < iterations; i++) {
+  for (int i = 0; i < (*(int *)iterations); i++) {
     if (inside_unit_circle(gen_point(&state))) {
       total_in++;
     }
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
 
 
   for (int i = 0; i < thread_count; i++) {
-    pthread_create(&pthread_list[i], NULL, &calc, iterations);
+    pthread_create(&pthread_list[i], NULL, &calc, &iterations);
   }
 
 
