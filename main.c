@@ -27,34 +27,51 @@ bool inside_unit_circle(point_t point) {
 }
 
 
-int calc(int iterations) {
+void *calc(void *iterations) {
   int state = time(NULL) ^ pthread_self();
 
-  int total_in = 0;
+  unsigned int total_in = 0;
   for (int i = 0; i < iterations; i++) {
     if (inside_unit_circle(gen_point(&state))) {
       total_in++;
     }
+    //printf("iteration\n");
   }
 
   return total_in;
 }
 
 int main(int argc, char** argv) {
-  int iterations = 0;
-  int thread_count = 1;
+  unsigned int iterations = 0;
+  unsigned int thread_count = 1;
   if (argc == 3) {
     thread_count = atoi(argv[1]);
     iterations = atoi(argv[2]); //change to 2 when implementing threads
   } else {
-    printf("Invalid arguments\nProper usage: picalc <iterations>\n", argc);
+    printf("Invalid arguments\nProper usage: picalc <thread count> <iterations>\n", argc);
     return 1;
   }
 
-  //start threads:
+  pthread_t *pthread_list = malloc(sizeof(pthread_t) * thread_count);
+  //unsigned int *thread_results = malloc(sizeof(int) * thread_count);
 
-  int in = calc(iterations);
-  double pi = 4 * ((float) in / (float)(iterations * thread_count));
+
+  for (int i = 0; i < thread_count; i++) {
+    pthread_create(&pthread_list[i], NULL, &calc, iterations);
+  }
+
+
+  unsigned long total_in = 0;
+
+  for (int i = 0; i < thread_count; i++) {
+    unsigned int result = 0;
+    pthread_join(pthread_list[i], &result);
+
+    total_in += result; 
+  }
+
+  
+  double pi = 4 * ((float) total_in / (float)(iterations * thread_count));
 
   printf("Approximated value of pi: %.8f\n", pi);
 
