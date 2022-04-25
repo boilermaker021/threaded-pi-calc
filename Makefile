@@ -1,2 +1,2 @@
-picalc: main.c
-	gcc -o picalc main.c -lm -pthread
+picalc: main.c picalc.c
+	gcc -o picalc main.c picalc.c -lm -pthread
