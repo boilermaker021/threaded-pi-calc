@@ -1,5 +1,7 @@
 # Inefficient Pi Calculator
 
+### An experiment in networking and threading
+
 ## Information
 
 Calculates pi with random numbers
