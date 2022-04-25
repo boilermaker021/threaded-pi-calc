@@ -10,7 +10,7 @@
 
 
 int main(int argc, char** argv) {
-  unsigned int iterations = 0;
+  unsigned int iterations = 1;
   unsigned int thread_count = 1;
   if (argc == 3) {
     thread_count = atoi(argv[1]);
@@ -21,7 +21,6 @@ int main(int argc, char** argv) {
   }
 
   pthread_t *pthread_list = malloc(sizeof(pthread_t) * thread_count);
-  //unsigned int *thread_results = malloc(sizeof(int) * thread_count);
 
 
   for (int i = 0; i < thread_count; i++) {
@@ -42,6 +41,7 @@ int main(int argc, char** argv) {
   double pi = 4 * ((float) total_in / (float)(iterations * thread_count));
 
   printf("Approximated value of pi: %.8f\n", pi);
+  printf("Percent error: %.8f\n", check_accuracy(pi));
 
   return 0;
 }

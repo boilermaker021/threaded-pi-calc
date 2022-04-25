@@ -8,9 +8,7 @@
 
 
 float check_accuracy(double result) {
-  
-
-  return 0;
+    return 100 * (fabs(result - PI) / fabs(PI));
 }
 
 point_t gen_point(int *seed) {
