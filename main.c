@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  time_t begin = time(NULL);
+  //time_t begin = time(NULL);
 
   pthread_t *pthread_list = malloc(sizeof(pthread_t) * thread_count);
 
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
   
   double pi = 4 * ((float) total_in / (float)(iterations * thread_count));
 
-  time_t end = time(NULL);
+  //time_t end = time(NULL);
 
   printf("Approximated value of pi: %.8f\n", pi);
   printf("Percent error: %.8f\n", check_accuracy(pi));
