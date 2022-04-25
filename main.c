@@ -20,6 +20,8 @@ int main(int argc, char** argv) {
     return 1;
   }
 
+  time_t begin = time(NULL);
+
   pthread_t *pthread_list = malloc(sizeof(pthread_t) * thread_count);
 
 
@@ -40,8 +42,14 @@ int main(int argc, char** argv) {
   
   double pi = 4 * ((float) total_in / (float)(iterations * thread_count));
 
+  time_t end = time(NULL);
+
   printf("Approximated value of pi: %.8f\n", pi);
   printf("Percent error: %.8f\n", check_accuracy(pi));
+  //printf("Time to complete: %.2f seconds\n", (begin - end));
+  printf("Threads: %d\n", thread_count);
+  printf("Iterations per thread: %d\n", iterations);
+  printf("Total iterations: %d\n", iterations * thread_count);
 
   return 0;
 }
