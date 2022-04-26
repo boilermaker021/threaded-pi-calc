@@ -16,11 +16,11 @@ int main(int argc, char** argv) {
     thread_count = atoi(argv[1]);
     iterations = atoi(argv[2]);
   } else {
-    printf("Invalid arguments\nProper usage: picalc <thread count> <iterations>\n", argc);
+    printf("Invalid arguments\nProper usage: picalc <thread count> <iterations>\n");
     return 1;
   }
 
-  //time_t begin = time(NULL);
+  time_t begin = time(NULL);
 
   pthread_t *pthread_list = malloc(sizeof(pthread_t) * thread_count);
 
@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 
 
   unsigned long total_in = 0;
-
+ 
   for (int i = 0; i < thread_count; i++) {
     unsigned long result = 0;
     pthread_join(pthread_list[i], &result);
@@ -42,11 +42,11 @@ int main(int argc, char** argv) {
   
   double pi = 4 * ((double) total_in / (double)(iterations * thread_count));
 
-  //time_t end = time(NULL);
+  time_t end = time(NULL);
 
   printf("Approximated value of pi: %.8f\n", pi);
-  printf("Percent error: %.8f\n", check_accuracy(pi));
-  //printf("Time to complete: %.2f seconds\n", (begin - end));
+  printf("Percent error: %.8f%%\n", check_accuracy(pi));
+  printf("Time to complete: %d seconds\n", (end - begin));
   printf("Threads: %d\n", thread_count);
   printf("Iterations per thread: %d\n", iterations);
   printf("Total iterations: %lu\n", iterations * thread_count);
