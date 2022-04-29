@@ -1,17 +1,19 @@
+#include <limits.h>
 #include <math.h>
+#include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <pthread.h>
+
 
 #include "picalc.h"
 
 
 int main(int argc, char** argv) {
   unsigned long iterations = 1;
-  unsigned long thread_count = 1;
+  unsigned char thread_count = 1;
   if (argc == 3) {
     thread_count = atoi(argv[1]);
     iterations = atoi(argv[2]);
@@ -21,6 +23,11 @@ int main(int argc, char** argv) {
   }
 
   time_t begin = time(NULL);
+
+  if (iterations * thread_count > ULONG_MAX) {
+    iterations = ULONG_MAX / thread_count;
+    printf("Note: iterations * thread count exceeds max value of unsigned long\nUsing new value for iterations: %lu\n", iterations);
+  }
 
   pthread_t *pthread_list = malloc(sizeof(pthread_t) * thread_count);
 
